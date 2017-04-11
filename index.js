@@ -13,7 +13,7 @@ var pkg=require('./package')
 var app=express();
 
 //设置模板路径
-app.set('views',path.join(__dirname),'views')
+app.set('views',path.join(__dirname,'views'))
 //设置模板引擎
 app.set('view engine','ejs')
 
@@ -49,6 +49,11 @@ app.use(function (req,res,next) {
     next()
 })
 
+//表单及文件上传
+app.use(require('express-formidable')({
+    uploadDir:path.join(__dirname,'public/img'),
+    keepExtensions:true
+}))
 //路由
 routes(app)
 

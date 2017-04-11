@@ -7,7 +7,7 @@ var checkNotLogin=require('../middlewares/check').checkNotlogin
 
 // get  /signin 登录页
 router.get('/',checkNotLogin,function (req,res,next) {
-    res.send(req.flash())
+    req.render('signin')
 })
 
 //post
