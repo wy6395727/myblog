@@ -1,0 +1,27 @@
+<div class="media clearfix p25">
+	<div class="media-object pull-left mr25">
+		<img src="static/pic/detail-left-img.png" alt="#">
+	</div>
+	<!-- /media-object -->
+	<div class="media-body hidden font-md">
+		<div class="media-heading pt15 pb15 mb15">
+			<h3>初中数学辅导课</h3>
+		</div>
+		<p class="media-info">
+			<span>课程描述</span>：从百草园到三味书屋是鲁迅写的一篇回忆性散文，描述童趣生活，描述童趣生活，描述童趣生活，描述童趣生活，描述童趣生活，描述童趣生活，描述童趣生活。
+		</p>
+		<p class="media-info">
+			<span>授课老师：</span>赵卫国</p>
+<p class="media-info">
+			<span>授课对象：</span>三年级一班</p>
+		<p class="media-info">
+			<span>授课时间：</span>
+			<time>2017-04-10</time> / <time class="weekday">周一</time> / <time class="range">16:00-20:57</time>
+		</p>
+		<p class="media-info"><a href="#">暂无评分</a></p>
+		<p class="media-options" style="/* height: 100px; */">
+			<a href="#" class="btn btn-primary btn-lg enter-action">进入教室</a>
+		</p>
+	</div>
+	<!-- /media-body -->
+</div>
