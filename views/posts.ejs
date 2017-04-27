@@ -1,3 +1,7 @@
 <%- include('header')%>
-home page
+
+<% posts.forEach(function (item) {%>
+    <%- include('components/post-content',{post:item})%>
+<% })%>
+
 <%- include('footer')%>

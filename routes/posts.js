@@ -10,13 +10,20 @@ var checkLogin = require('../middlewares/check').checkLogin
 // GET /posts 所有用户或者特定用户的文章页
 //   eg: GET /posts?author=xxx
 router.get('/', function (req, res, next) {
-    res.send(req.flash())
+    var author=req.query.author
+    PostModel.getPosts(author)
+        .then(function (posts) {
+            res.render('posts',{
+                posts:posts
+            })
+        })
+        .catch(next)
 })
 
 // POST /posts 发表一篇文章
 router.post('/', checkLogin, function (req, res, next) {
     //创建文章
-    var author = req.fields.user._id
+    var author = req.session.user._id
     var title = req.fields.title
     var content = req.fields.content
 
@@ -31,7 +38,23 @@ router.post('/', checkLogin, function (req, res, next) {
         req.flash('error', e.message)
         res.redirect('back')
     }
-    //todo
+
+
+    //写入数据库
+    var post = {
+        author: author,
+        title: title,
+        content: content,
+        pv: 0,
+    }
+    PostModel.create(post)
+        .then(function (result) {
+            // 此 post 是插入 mongodb 后的值，包含 _id
+            var post = result.ops[0]
+            req.flash('sucess', '恭喜！文章成功发布')
+            res.redirect('/posts/${post._id}')
+        })
+        .catch(next)
 })
 
 //GET /posts/create 发表文章页
