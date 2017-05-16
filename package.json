@@ -4,7 +4,9 @@
   "description": "my first blog",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --harmony test"
+    "test": "mocha --harmony test",
+    "start": "cross-env NODE_ENV=production pm2 start index.js --node-args='--harmony' --name 'myblog'",
+    "heroku": "cross-env NODE_ENV=production node --harmony index"
   },
   "author": "vast",
   "license": "ISC",
