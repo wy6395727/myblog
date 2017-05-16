@@ -74,7 +74,7 @@ router.get('/:postId', function(req, res, next) {
     ])
         .then(function (result) {
             var post = result[0];
-            var comments = result[1];
+            var comments = result[1][0];
             if (!post) {
                 throw new Error('该文章不存在');
             }

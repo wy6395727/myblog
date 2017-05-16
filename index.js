@@ -9,6 +9,8 @@ var flash = require('connect-flash');
 var config=require('config-lite')
 var routes=require('./routes')
 var pkg=require('./package')
+var winston=require('winston')
+var expressWinston=require('express-winston')
 
 var app=express();
 
@@ -54,9 +56,51 @@ app.use(require('express-formidable')({
     uploadDir:path.join(__dirname,'public/img'),
     keepExtensions:true
 }))
+
+//正常请求的日志
+app.use(expressWinston.logger({
+    transports:[
+        new winston.transports.Console({
+            json:true,
+            colorize:true
+        }),
+        new winston.transports.File({
+            filename:'logs/success.log'
+        })
+    ]
+}))
+
 //路由
 routes(app)
 
-app.listen(config.port,function () {
-    console.log(pkg.name+'  listening on port  ' +config.port)
+//错误请求的日志
+app.use(expressWinston.errorLogger({
+    transports:[
+        new winston.transports.Console({
+            json:true,
+            colorize:true
+        }),
+        new winston.transports.File({
+            filename:'logs/error.log'
+        })
+    ]
+}))
+// 可以看出：我们将正常请求的日志打印到终端并写入了 logs/success.log，将错误请求的日志打印到终端并写入了 logs/error.log。需要注意的是：记录正常请求日志的中间件要放到 routes(app) 之前，记录错误请求日志的中间件要放到 routes(app) 之后。
+
+
+app.use(function (err,req,res,next) {
+    res.render('error',{
+        error:err
+    })
 })
+
+if(module.parent){
+    //如果 index.js 被 require 了，则导出 app，通常用于测试
+    module.exports=app
+}else{
+    //监听端口，启动程序
+    app.listen(config.port,function () {
+        console.log(pkg.name+'  listening on port  ' +config.port)
+    })
+}
+
